@@ -4,6 +4,9 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.cross_validation import train_test_split
 from sklearn.datasets import make_hastie_10_2
 import matplotlib.pyplot as plt
+import os
+
+import pdb
 
 """ HELPER FUNCTION: GET ERROR RATE ========================================="""
 def get_error_rate(pred, Y):
@@ -11,7 +14,7 @@ def get_error_rate(pred, Y):
 
 """ HELPER FUNCTION: PRINT ERROR RATE ======================================="""
 def print_error_rate(err):
-    print 'Error rate: Training: %.4f - Test: %.4f' % err
+    print('Error rate: Training: %.4f - Test: %.4f' % err)
 
 """ HELPER FUNCTION: GENERIC CLASSIFIER ====================================="""
 def generic_clf(Y_train, X_train, Y_test, X_test, clf):
@@ -65,6 +68,7 @@ def plot_error_rate(er_train, er_test):
     plot1.set_ylabel('Error rate', fontsize = 12)
     plot1.set_title('Error rate vs number of iterations', fontsize = 16)
     plt.axhline(y=er_test[0], linewidth=1, color = 'red', ls = 'dashed')
+    plt.show()
 
 """ MAIN SCRIPT ============================================================="""
 if __name__ == '__main__':
@@ -74,15 +78,20 @@ if __name__ == '__main__':
     df = pd.DataFrame(x)
     df['Y'] = y
 
+    print("1")
     # Split into training and test set
     train, test = train_test_split(df, test_size = 0.2)
     X_train, Y_train = train.ix[:,:-1], train.ix[:,-1]
     X_test, Y_test = test.ix[:,:-1], test.ix[:,-1]
     
+    print("2")
     # Fit a simple decision tree first
     clf_tree = DecisionTreeClassifier(max_depth = 1, random_state = 1)
+    pdb.set_trace()
+    clf_tree.export()
     er_tree = generic_clf(Y_train, X_train, Y_test, X_test, clf_tree)
     
+    print("3")
     # Fit Adaboost classifier using a decision tree as base estimator
     # Test with different number of iterations
     er_train, er_test = [er_tree[0]], [er_tree[1]]
@@ -92,5 +101,7 @@ if __name__ == '__main__':
         er_train.append(er_i[0])
         er_test.append(er_i[1])
     
+    print("4")
     # Compare error rate vs number of iterations
     plot_error_rate(er_train, er_test)
+
