@@ -15,3 +15,10 @@ Using the Hastie (10.2) dataset, we can appreciate a significant reduction in th
 
 ### References
 - Trevor Hastie, Robert Tibshirani, Jerome Friedman - *The Elements of Statistical Learning*
+
+### Protobuf
+1. Install compiler. https://github.com/protocolbuffers/protobuf/releases
+2. Compile. protoc -I=$SRC_DIR --python_out=$DST_DIR $SRC_DIR/addressbook.proto
+3. Install python package. pip install protobuf
+4. Done.
+https://developers.google.com/protocol-buffers/docs/pythontutorial
